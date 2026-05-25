@@ -1,0 +1,17 @@
+# Deploy key (private key must stay secret)
+deploy_key
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.local
