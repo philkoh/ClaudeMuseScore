@@ -137,7 +137,13 @@ def analyze(input_path, output_path=None, mode="symbols", key_override=None,
         stem = Path(input_path).stem
         output_path = str(Path(input_path).parent / f"{stem}_analyzed.musicxml")
 
-    score.write('musicxml', fp=output_path)
+    try:
+        score.write('musicxml', fp=output_path)
+    except Exception as e:
+        if verbose:
+            print(f"Export failed ({e}), retrying without percussion parts...")
+        _remove_percussion_parts(score)
+        score.write('musicxml', fp=output_path)
     if verbose:
         print(f"Saved: {output_path}")
 
@@ -148,14 +154,17 @@ def analyze(input_path, output_path=None, mode="symbols", key_override=None,
 
 
 def _reduce_to_measure(chordified):
-    from music21 import analysis, stream, chord
+    from music21 import stream, chord
     reduced = stream.Part()
     for m in chordified.getElementsByClass('Measure'):
         new_m = stream.Measure(number=m.number)
         new_m.offset = m.offset
         chords = list(m.getElementsByClass(chord.Chord))
         if chords:
-            best = max(chords, key=lambda c: c.quarterLength)
+            best = max(chords, key=lambda c: (
+                len(set(p.pitchClass for p in c.pitches)),
+                c.quarterLength
+            ))
             best.offset = 0
             best.quarterLength = m.barDuration.quarterLength
             new_m.append(best)
@@ -163,8 +172,15 @@ def _reduce_to_measure(chordified):
     return reduced
 
 
+def _is_valid_chord_symbol(sym):
+    skip = ("Cannot Be Identified", "triad", "chord", "trichord",
+            "tetrachord", "tetramirror", "Minor Third", "Perfect Fourth",
+            "Perfect Fifth", "incomplete", "enharmonic")
+    return not any(s in sym for s in skip)
+
+
 def _write_symbols_to_score(score, chordified, results, mode, detected_key):
-    from music21 import harmony, roman
+    from music21 import harmony, expressions
 
     part = score.parts[0] if score.parts else score
 
@@ -181,28 +197,48 @@ def _write_symbols_to_score(score, chordified, results, mode, detected_key):
             continue
 
         local_offset = offset - m.offset
+        sym = r['symbol']
+        roman_fig = r['roman']
+
+        if not _is_valid_chord_symbol(sym):
+            continue
 
         if mode in ("symbols", "both"):
-            sym = r['symbol']
-            if "Cannot Be Identified" in sym or "triad" in sym or "chord" in sym:
-                continue
             try:
                 cs = harmony.ChordSymbol(sym)
-                cs.offset = local_offset
                 m.insert(local_offset, cs)
             except Exception:
                 pass
 
-        if mode in ("roman", "both"):
-            fig = r['roman']
-            if fig == "?":
-                continue
+        if mode in ("roman", "both") and roman_fig != "?":
             try:
-                rn = roman.RomanNumeral(fig, detected_key)
-                rn.offset = local_offset
-                m.insert(local_offset, rn)
+                te = expressions.TextExpression(roman_fig)
+                te.style.fontSize = 10
+                te.placement = 'below'
+                m.insert(local_offset, te)
             except Exception:
                 pass
+
+
+def _remove_percussion_parts(score):
+    """Remove percussion/drum parts that cause MusicXML export errors."""
+    if not hasattr(score, 'parts'):
+        return
+    to_remove = []
+    for p in score.parts:
+        dominated_by_unpitched = False
+        for inst in p.recurse().getElementsByClass('Instrument'):
+            if hasattr(inst, 'midiChannel') and inst.midiChannel == 9:
+                dominated_by_unpitched = True
+                break
+        for el in p.recurse():
+            if type(el).__name__ == 'Unpitched':
+                dominated_by_unpitched = True
+                break
+        if dominated_by_unpitched:
+            to_remove.append(p)
+    for p in to_remove:
+        score.remove(p)
 
 
 def _open_in_musescore(path):
