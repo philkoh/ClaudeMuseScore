@@ -4,6 +4,12 @@ deploy_key
 # MuseScore build artifacts (rebuild from source)
 MuseScore/build/
 
+# Python virtual environment (recreate with: python3 -m venv venv && venv/bin/pip install music21)
+venv/
+
+# Analysis output files
+*_analyzed.musicxml
+
 # OS files
 .DS_Store
 Thumbs.db
