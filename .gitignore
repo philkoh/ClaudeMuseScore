@@ -1,6 +1,9 @@
 # Deploy key (private key must stay secret)
 deploy_key
 
+# MuseScore build artifacts (rebuild from source)
+MuseScore/build/
+
 # OS files
 .DS_Store
 Thumbs.db

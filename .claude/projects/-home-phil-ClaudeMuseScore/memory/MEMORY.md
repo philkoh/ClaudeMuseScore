@@ -3,3 +3,4 @@
 - [User Profile](user_profile.md) — Phil Koh, project owner and default committer
 - [Standing Orders](feedback_standing-orders.md) — Auto-commit/push/memory on new features; commit after tests pass
 - [Repo Setup](project_repo-setup.md) — GitHub repo, deploy key, SSH config details
+- [MuseScore Build](project_musescore-build.md) — MuseScore 5.0.0-dev built from source, build commands and deps
