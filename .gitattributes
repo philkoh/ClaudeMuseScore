@@ -1,0 +1,37 @@
+# Default: let git auto-detect text files and normalize line endings on commit
+* text=auto
+
+# Explicit text files (LF in repo, native on checkout)
+*.py    text eol=lf
+*.md    text eol=lf
+*.sh    text eol=lf
+*.cmake text eol=lf
+*.txt   text
+*.yml   text
+*.yaml  text
+*.json  text
+*.xml   text
+*.musicxml text
+*.gitignore text eol=lf
+*.gitattributes text eol=lf
+
+# Windows-specific scripts: always CRLF
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+
+# Binaries: never touch line endings
+*.mid   binary
+*.midi  binary
+*.kar   binary
+*.mxl   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.pdf   binary
+*.zip   binary
+*.so    binary
+*.dll   binary
+*.dylib binary
+*.exe   binary

@@ -8,3 +8,4 @@
 - [Section Detection](project_section-detection.md) — larger goal: detect repeated sections (chorus/verse) via multi-strategy comparison
 - [Analysis Gotchas](project_analysis-gotchas.md) — practical pitfalls learned from real-MIDI testing (formats, key ambiguity, export crashes)
 - [Session Resume](project_session-resume.md) — where we paused, next planned step, how to resume after fresh clone
+- [Cross-Platform](project_cross-platform.md) — Ubuntu + Windows 11 co-development rules and gotchas

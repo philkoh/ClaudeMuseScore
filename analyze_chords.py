@@ -243,8 +243,8 @@ def _remove_percussion_parts(score):
 
 def _open_in_musescore(path):
     import subprocess
-    mscore = os.environ.get('MSCORE_PATH',
-        '/home/phil/ClaudeMuseScore/MuseScore/build/install/bin/mscore')
+    from musescore_path import require_mscore
+    mscore = require_mscore()
     subprocess.Popen([mscore, path],
                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print(f"Opened in MuseScore: {path}")

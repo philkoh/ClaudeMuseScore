@@ -6,6 +6,8 @@ MuseScore/build/
 
 # Python virtual environment (recreate with: python3 -m venv venv && venv/bin/pip install music21)
 venv/
+__pycache__/
+*.pyc
 
 # Analysis output files
 *_analyzed.musicxml
