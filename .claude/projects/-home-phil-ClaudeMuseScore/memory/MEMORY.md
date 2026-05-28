@@ -5,3 +5,4 @@
 - [Repo Setup](project_repo-setup.md) — GitHub repo, deploy key, SSH config details
 - [MuseScore Build](project_musescore-build.md) — MuseScore 5.0.0-dev built from source, build commands and deps
 - [Chord Analysis](project_chord-analysis.md) — music21 bridge for MIDI/MusicXML → chord symbols + Roman numerals
+- [Section Detection](project_section-detection.md) — larger goal: detect repeated sections (chorus/verse) via multi-strategy comparison

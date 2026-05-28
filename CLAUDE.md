@@ -15,13 +15,16 @@ Phil Koh <pk14225@gmail.com>
 - Install: `cmake --install . --config RelWithDebInfo`
 - Dependencies: Qt 6.10.2, GCC 15, CMake 4.2.3, Ninja 1.13.2 (all from Ubuntu 26.04 repos)
 
-## Chord Analysis Tool
-- `analyze_chords.py` — music21-based harmonic analysis bridge
-- Requires: `python3 -m venv venv && venv/bin/pip install music21`
-- Usage: `venv/bin/python3 analyze_chords.py input.mid [output.musicxml] [--roman|--both] [--per-measure] [--open] [--key Am]`
-- Auto-detects key, chordifies score, identifies chord symbols and Roman numerals
-- Handles MIDI enharmonic respelling for the detected key
-- Writes chord symbols back into MusicXML for MuseScore import
+## Chord Analysis Tools
+- `analyze_chords.py` — whole-score harmonic analysis bridge
+  - Usage: `venv/bin/python3 analyze_chords.py input.mid [output.musicxml] [--roman|--both] [--per-measure] [--open] [--key Am]`
+  - Auto-detects key, chordifies score, writes chord symbols/Roman numerals back as MusicXML
+- `analyze_by_instrument.py` — per-instrument chord analysis (one analysis per part)
+  - Usage: `venv/bin/python3 analyze_by_instrument.py input.mid [--per-beat] [--json out.json] [--csv out.csv] [--max-measures N]`
+  - Splits format-0 MIDI files by channel; produces side-by-side measure-vs-instrument table
+  - Reports `avg_polyphony` per part — high values indicate chord-conveying instruments
+  - Foundation for future structural section detection (chorus/verse identification)
+- Setup: `python3 -m venv venv && venv/bin/pip install music21`
 
 ## Customization Workflow
 - Edit source files in `MuseScore/` directly
