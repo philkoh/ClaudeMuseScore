@@ -12,6 +12,10 @@ __pycache__/
 # Analysis output files
 *_analyzed.musicxml
 
+# Audio files (copyrighted; don't commit). The directory itself is tracked via .gitkeep
+audio/*
+!audio/.gitkeep
+
 # OS files
 .DS_Store
 Thumbs.db
