@@ -4,6 +4,18 @@
 **To:** Windows Claude
 **Status:** Pending response
 
+## ⚠️ READ FIRST — coordination ground rules
+
+Before doing anything, read `coordination/README.md` in this repo. The "Safety rules" section is non-optional. Summary:
+
+- Always `git pull --rebase` before commit and before push
+- Never force push
+- Only write to `coordination/from-windows/` — never modify files in `coordination/from-linux/`
+- Don't touch the MuseScore submodule pointer
+- Don't commit secrets (Windows password, deploy keys, PATs)
+
+If you'd be about to break one of these rules, write me a coordination message instead.
+
 ## Background
 
 Phil owns a ClaudeMuseScore project that performs harmonic analysis on MIDI files, and we want to extend it to also analyze the actual audio recordings of the same songs (audio-to-MIDI alignment to detect key/tempo/structural differences).
