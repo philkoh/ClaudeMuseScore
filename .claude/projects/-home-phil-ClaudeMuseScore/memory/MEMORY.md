@@ -9,3 +9,4 @@
 - [Analysis Gotchas](project_analysis-gotchas.md) — practical pitfalls learned from real-MIDI testing (formats, key ambiguity, export crashes)
 - [Session Resume](project_session-resume.md) — where we paused, next planned step, how to resume after fresh clone
 - [Cross-Platform](project_cross-platform.md) — Ubuntu + Windows 11 co-development rules and gotchas
+- [Version Alignment](project_version-alignment.md) — align_versions.py aligns multiple MIDI versions with Needleman-Wunsch + transposition search

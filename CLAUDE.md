@@ -37,6 +37,11 @@ Phil Koh <pk14225@gmail.com>
   - Splits format-0 MIDI files by channel; produces side-by-side measure-vs-instrument table
   - Reports `avg_polyphony` per part — high values indicate chord-conveying instruments
   - Foundation for future structural section detection (chorus/verse identification)
+- `align_versions.py` — align multiple versions of the same song via chord-sequence comparison
+  - Usage: `venv/bin/python3 align_versions.py file1.mid file2.mid [file3.mid ...]`
+  - Detects: whole-song key transpositions, intro/outro length differences, middle insertions (different repetition counts), new ending material
+  - Uses Needleman-Wunsch sequence alignment, tries all 12 transpositions, picks best score
+  - Reports section-level summary (intro/middle/outro classification) plus detailed measure-by-measure diff
 - Setup (Linux/macOS): `python3 -m venv venv && venv/bin/pip install music21`
 - Setup (Windows): `python -m venv venv && venv\Scripts\pip install music21`
 
